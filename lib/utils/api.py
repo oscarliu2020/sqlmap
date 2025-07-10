@@ -772,8 +772,10 @@ def client(host=RESTAPI_DEFAULT_ADDRESS, port=RESTAPI_DEFAULT_PORT, username=Non
     dbgMsg += "\n\t$ curl http://%s:%d/scan/$taskid/data" % (host, port)
     dbgMsg += "\n\t$ curl http://%s:%d/scan/$taskid/log" % (host, port)
     logger.debug(dbgMsg)
-
-    addr = "http://%s:%d" % (host, port)
+    if host.startswith("http://") or host.startswith("https://"):
+        addr="%s:%s"% (host, port)
+    else:
+        addr = "http://%s:%d" % (host, port)
     logger.info("Starting REST-JSON API client to '%s'..." % addr)
 
     try:
